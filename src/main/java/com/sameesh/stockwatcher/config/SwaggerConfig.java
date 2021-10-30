@@ -10,6 +10,10 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
+import java.util.function.Predicate;
+
+import static org.springframework.data.mongodb.core.aggregation.BooleanOperators.Or.or;
+import static springfox.documentation.builders.PathSelectors.regex;
 
 @Configuration
 @EnableSwagger2
