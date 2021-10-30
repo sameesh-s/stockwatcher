@@ -2,6 +2,7 @@ package com.sameesh.stockwatcher.controller;
 
 import com.sameesh.stockwatcher.dto.ApiError;
 import com.sameesh.stockwatcher.dto.Stock;
+import com.sameesh.stockwatcher.dto.WishList;
 import com.sameesh.stockwatcher.exception.BusinessException;
 import com.sameesh.stockwatcher.service.WishListService;
 import org.slf4j.Logger;
@@ -16,33 +17,30 @@ import java.util.List;
 @RequestMapping("/api/")
 public class WishListController {
 
-    private static final Logger log = LoggerFactory.getLogger(WishListController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WishListController.class);
 
     @Autowired
     WishListService wishListService;
 
+    @GetMapping("/wishlist/")
+    public List<WishList> getAllWishList() throws BusinessException {
+        return wishListService.findAll();
+    }
+
     @GetMapping("/wishlist/{wishlistname}")
-    public WishList getAllWishlist(@PathVariable("wishlistname") String wishlistName){
+    public WishList getWishListByName(@PathVariable("wishlistname") String wishlistName) throws BusinessException {
         return wishListService.findByName(wishlistName);
+    }
+
+    @PostMapping("/wishlist/")
+    public WishList create(@RequestBody WishList wishList){
+        return wishListService.create(wishList);
     }
 
     @GetMapping("wishlist/{wishlistname}/strategy/{strategy}")
     public Object applyStrategy(@PathVariable("wishlistname") String wishlistName,
-                                        @PathVariable("strategy") String strategy){
-        System.out.println(strategy);
-        System.out.println(wishlistName);
-        try {
+                                        @PathVariable("strategy") String strategy) throws BusinessException {
             return wishListService.applyStrategy(wishlistName, strategy);
-        } catch (BusinessException e) {
-            e.printStackTrace();
-            return new ApiError(e.getMessage());
-        }
     }
-
-    @GetMapping("/wishlist/{name}")
-    public String findItemByName(@PathVariable("name") String name){
-        return  name;
-    }
-
 
 }
