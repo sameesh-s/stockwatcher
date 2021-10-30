@@ -23,7 +23,6 @@ public class WishListController {
 
     @GetMapping("/wishlist/{name}")
     public String findItemByName(@PathVariable("name") String name){
-        System.out.println("name" + name);
         return  name;
     }
 

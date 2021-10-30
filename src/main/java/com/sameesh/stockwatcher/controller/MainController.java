@@ -5,9 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 public class MainController {
 
@@ -18,6 +15,5 @@ public class MainController {
         LOGGER.warn("it is inside the application :: ");
         return "server is up";
     }
-
 
 }
