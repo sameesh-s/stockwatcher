@@ -1,6 +1,8 @@
 package com.sameesh.stockwatcher.strategy;
 
 import com.sameesh.stockwatcher.dto.Stock;
+import com.sameesh.stockwatcher.entity.TickPoint;
+import com.sameesh.stockwatcher.util.Stack;
 
 import java.util.Comparator;
 import java.util.List;
@@ -18,7 +20,25 @@ public class PutOption implements StockSelectionStrategy {
     }
 
     private void computeProximity(Stock stock){
-        Random rd = new Random();
-        stock.setProximity(rd.nextFloat());
+        Stack<TickPoint> stack = new Stack<>();
+        int proximity = 0;
+        for(TickPoint tick: stock.getTicks()){
+            if(tick.calcWickSize() > 20){
+                proximity = proximity + 8;
+                if(!stack.isEmpty()){
+                    TickPoint prvTick = stack.peek();
+                    if(prvTick.getLow() < tick.getLow()){
+                        proximity = proximity +3;
+                    }else if(prvTick.getHigh() < tick.getHigh()){
+                        stack.push(tick);
+                    }else{
+                        proximity = proximity -2;
+                        stack.pop();
+                    }
+                }
+            }
+        }
+        stock.setProximity(Math.abs(proximity));
     }
+
 }

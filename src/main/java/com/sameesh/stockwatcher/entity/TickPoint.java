@@ -10,4 +10,9 @@ public class TickPoint {
     private int high;
     private int low;
     private int close;
+
+    public float calcWickSize(){
+        float totalSize = this.high- this.low;
+        return ((Math.abs(low - close))/totalSize ) * 100;
+    }
 }
