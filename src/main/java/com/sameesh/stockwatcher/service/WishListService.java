@@ -86,4 +86,13 @@ public class WishListService {
         wishList.setId(wishListRepository.save(wishListEntity).getId());
         return wishList;
     }
+
+    /**
+     * Hard delete for the wishlist: for the time being soft delete is not implemented
+     * @param wishlistName String
+     * @return wishlist deleted or not
+     */
+    public Boolean deleteByName(String wishlistName) {
+        return wishListRepository.deleteByName(wishlistName);
+    }
 }

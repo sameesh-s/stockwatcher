@@ -1,5 +1,6 @@
 package com.sameesh.stockwatcher.repository;
 
+import com.mongodb.client.result.DeleteResult;
 import com.sameesh.stockwatcher.entity.WishListEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -34,5 +35,16 @@ public class WishListRepository {
 
     public List<WishListEntity> findAll() {
         return mongoTemplate.findAll(WishListEntity.class);
+    }
+
+    public Boolean deleteByName(String wishlistName) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(NAME_FIELD).is(wishlistName));
+        DeleteResult deleteResult = mongoTemplate.remove(query, WishListEntity.class);
+        if(deleteResult.getDeletedCount() > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

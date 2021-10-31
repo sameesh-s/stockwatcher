@@ -32,6 +32,12 @@ public class WishListController {
         return wishListService.findByName(wishlistName);
     }
 
+
+    @DeleteMapping("/wishlist/{wishlistname}")
+    public Boolean deleteWishListByName(@PathVariable("wishlistname") String wishlistName) throws BusinessException {
+        return wishListService.deleteByName(wishlistName);
+    }
+
     @PostMapping("/wishlist/")
     public WishList create(@RequestBody WishList wishList){
         return wishListService.create(wishList);
