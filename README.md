@@ -14,7 +14,7 @@ Use cases
 
 Strategy Pattern   
 ----------------   
-![alt text](https://github.com/sameesh-s/stockwatcher/blob/master/blob/strategy.jpg?raw=true)
+![strategy architecture](https://github.com/sameesh-s/stockwatcher/blob/master/blob/strategy.jpeg?raw=true)
 
 Postman collection
 ------------------
