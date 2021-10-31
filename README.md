@@ -11,3 +11,15 @@ Use cases
    https://localhost:8080/api/wishlist/{wishlistname}/strategy/{strategyname}
     So it will give the stocks which has the highest proximity for making a profit, in a sorted order
     Currently available strategies in the design are "putoption", "shortsell"
+
+Strategy Pattern   
+----------------   
+![alt text](https://github.com/sameesh-s/stockwatcher/blob/master/blob/strategy.jpg?raw=true)
+
+Postman collection
+------------------
+uploaded in the repo
+
+MONGODB DUMP  
+------------
+in dbdump folder
