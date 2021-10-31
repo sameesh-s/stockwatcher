@@ -43,14 +43,20 @@ public class WishListService {
     public List<Stock> applyStrategy(String wishlistName, String strategyName) throws BusinessException {
         StockSelectionStrategy strategy = StockStrategyFactory.getStrategy(strategyName);
         System.out.println(strategy);
-        List<Stock> stocks = new ArrayList<>();
+        List<Stock> stocks = findByName(wishlistName).getStocks();
+        LOGGER.warn("stock count: " + stocks.size());
         return strategy.rank(stocks);
     }
 
     public WishList findByName(String wishlistName) throws BusinessException {
         Optional<WishListEntity> wishListResultSet = wishListRepository.findByName(wishlistName);
         if(wishListResultSet.isPresent()){
-            return  mapper.convertValue(wishListResultSet.get(), WishList.class);
+            WishListEntity wishListEntity = wishListResultSet.get();
+            WishList wishList = mapper.convertValue(wishListEntity, WishList.class);
+            wishList.setStocks(wishListEntity.getStockIds().stream()
+                    .map(stockId -> mapper.convertValue(stockRepository.findById(stockId), Stock.class))
+                    .collect(Collectors.toList()));
+            return  wishList;
         }else{
             throw new BusinessException("Wishlist with name " + wishlistName+" dosn't exist...");
         }
